@@ -4,6 +4,7 @@
 Демонстрирует использование модулей orders и storage.
 """
 
+
 import orders
 import storage
 from datetime import datetime, timezone
@@ -13,8 +14,6 @@ import uuid
 def generate_unique_id() -> int:
     """Генерирует уникальный идентификатор заказа."""
     return abs(hash(uuid.uuid4())) % (10 ** 8)
-
-
 
 
 if __name__ == "__main__":
