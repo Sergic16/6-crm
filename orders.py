@@ -13,7 +13,7 @@ class Task(TypedDict):
     amount: float
     email: str
     status: str
-    tags: List[str]
+    tags: list[str]
     created_at: str
     due: Optional[str]
     closed_at: Optional[str]
@@ -29,7 +29,7 @@ def create_order(
     amount: float,
     email: str,
     status: str,
-    tags: Set[str],
+    tags: set[str],
     created_at: str,
     due: Optional[str] = None,
     closed_at: Optional[str] = None
@@ -108,15 +108,16 @@ def edit_order(order_id: int, **kwargs) -> bool:
                 if key in order:
                     # Дополнительная валидация для статуса
                     if key == 'status':
-                valid_statuses = {"new", "in_progress", "done", "cancelled"}
-                if value not in valid_statuses:
-                    raise ValueError(
-                        f"Недопустимый статус: {value}. Допустимые: {valid_statuses}")
+                        valid_statuses = {
+                            "new", "in_progress", "done", "cancelled"}
+                        if value not in valid_statuses:
+                            raise ValueError(
+                                f"Недопустимый статус: {value}. Допустимые: {valid_statuses}")
             # Преобразуем теги в список, если это множество
-            if key == 'tags' and isinstance(value, set):
-                value = list(value)
-            order[key] = value
-            return True
+                    if key == 'tags' and isinstance(value, set):
+                        value = list(value)
+                        order[key] = value
+                        return True
     return False
 
 
