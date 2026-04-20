@@ -117,7 +117,7 @@ def edit_order(order_id: int, **kwargs) -> bool:
                     if key == 'tags' and isinstance(value, set):
                         value = list(value)
                         order[key] = value
-                        return True
+            return True
     return False
 
 
