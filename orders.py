@@ -156,6 +156,39 @@ class OrderManager:
                     continue
         return overdue
 
+    def create_order(
+        self,
+        title: str,
+        amount: float,
+        email: str,
+        status: str = "new",
+        tags: Optional[set] = None,
+        due: Optional[str] = None
+    ) -> Dict[str, Any]:
+    """Создаёт новый заказ с UUID."""
+    # Валидация статуса
+    if status not in VALID_STATUSES:
+        raise ValueError(
+            f"Недопустимый статус: {status}. Доступные: {', '.join(VALID_STATUSES)}"
+        )
+
+    # Генерация UUID
+    order_id = str(uuid.uuid4())
+
+    order = {
+        "id": order_id,
+        "title": title,
+        "amount": amount,
+        "email": email,
+        "status": status,
+        "tags": tags or set(),
+        "created_at": datetime.now().isoformat(),  # строка ISO
+        "due": due  # уже строка ISO, если указана
+    }
+
+    self._orders.append(order)
+    return order
+
     def filter_by_tag(self, tag: str) -> List[Dict[str, Any]]:
         """Фильтрует заказы по тегу.
 
